@@ -61,5 +61,18 @@ namespace BagOLoot
 
             return child;
         }
+
+        public List<int> GetAllChildrenWithToys()
+        {
+            List<int> dummyData = new List<int>();
+            return dummyData;
+        }
+
+        public bool IsDelivered(int childID)
+        {
+            return true;
+        }
+
+
     }
 }
