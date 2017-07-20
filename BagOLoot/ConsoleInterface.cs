@@ -30,11 +30,14 @@ namespace BagOLoot
             string childName = Console.ReadLine();
             ChildRegister registry = new ChildRegister();
             bool success = registry.AddChild(childName);
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
 
         public void AssignToyToChildScreen()
         {
-            Console.WriteLine("/n/n");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("What child should get a toy?");
             ChildRegister childRegistry = new ChildRegister();
             ToyRegister toyRegistry = new ToyRegister();
@@ -54,7 +57,8 @@ namespace BagOLoot
             Console.WriteLine("> ");
             string toyName = Console.ReadLine();
             toyRegistry.AddToyToChild(toyName, childID);
-            Console.WriteLine("/n/n");
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
 
         public void RevokeToyFromChildScreen()
@@ -91,15 +95,17 @@ namespace BagOLoot
             }
             else
             {
-                Console.WriteLine("/n");
+                Console.WriteLine("");
                 Console.WriteLine("This child doesn't have any toys :(");
-                Console.WriteLine("/n/n");
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
         }
-        
+
         public void ReviewChildToysScreen()
         {
-            Console.WriteLine("/n/n");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("Whose toys would you like to see?");
             ChildRegister childRegistry = new ChildRegister();
             Dictionary<int, string> childList = childRegistry.GetChildren();
@@ -124,19 +130,22 @@ namespace BagOLoot
                 {
                     Console.WriteLine($"{counter2}. {toy.Value}");
                 }
-                Console.WriteLine("/n/n");
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
             else
             {
-                Console.WriteLine("/n");
+                Console.WriteLine("");
                 Console.WriteLine("This child doesn't have any toys :(");
-                Console.WriteLine("/n/n");
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
         }
 
         public void AssignChildDeliveryCompleteScreen()
         {
-            Console.WriteLine("/n/n");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("Which child had their toys delivered?");
             ChildRegister childRegistry = new ChildRegister();
             Dictionary<int, string> childList = childRegistry.GetChildren();
@@ -152,12 +161,14 @@ namespace BagOLoot
             Console.Write ("> ");
             int childChoice = Int32.Parse(Console.ReadLine());
             childRegistry.IsDelivered(childChoice);
-            Console.WriteLine("/n/n");
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
 
         public void YuletimeDeliveryReportScreen()
         {
-            Console.WriteLine("/n/n");
+            Console.WriteLine("");
+            Console.WriteLine("");
             Console.WriteLine("Yuletide Delivery Report");
             Console.WriteLine("%%%%%%%%%%%%%%%%%%%%%%%%");
             ChildRegister childRegistry = new ChildRegister();
@@ -175,7 +186,8 @@ namespace BagOLoot
                     counter++;
                 }
             }
-            Console.WriteLine("/n/n");    
+            Console.WriteLine("");
+            Console.WriteLine("");    
         }
     }
 }
