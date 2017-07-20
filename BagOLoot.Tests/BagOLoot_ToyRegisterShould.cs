@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace BagOLoot.Tests
@@ -18,27 +19,28 @@ namespace BagOLoot.Tests
             string toyName = "Firetruck";
             int childID = 1;
             int toyID = _register.AddToyToChild(toyName, childID);
-            List<int> toys = _register.GetChildsToys(childID);
+            List<string> toys = _register.GetChildsToys(childID);
 
 
-            Assert.Contains(toyID, toys);
+            Assert.Contains(toyName, toys);
         }
         [Fact]
         public void RemoveToyFromChildShould()
         {
-            int toyID = 9;
+            string toy = "Firetruck";
             int childID = 1;
-            List<int> toys = _register.GetChildsToys(childID);            
-            _register.RemoveToy(toyID);
-            Assert.DoesNotContain(toyID, toys);
+            Dictionary<int, string> toys = _register.GetAllToysForChild(childID);
+            int toyID = toys.FirstOrDefault(x => x.Value == toy).Key;            
+            bool success = _register.RemoveToy(toyID);
+            Assert.True(success);
 
         }
         [Fact]
         public void GetAllToysForChildShould()
         {
             int childID = 1;
-            List<int> toys=_register.GetAllToysForChild(childID);
-            Assert.IsType<List<int>>(toys);
+            Dictionary<int, string> toys=_register.GetAllToysForChild(childID);
+            Assert.IsType<Dictionary<int, string>>(toys);
 
         }
         

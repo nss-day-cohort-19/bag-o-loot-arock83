@@ -44,13 +44,33 @@ namespace BagOLoot
                 dbcmd.Dispose ();
                 _connection.Close ();
             }
-
             return _lastId != 0;
         }
 
-        public List<string> GetChildren ()
+        public Dictionary<int, string> GetChildren()
         {
-            return new List<string>();
+             
+           Dictionary<int, string> childList = new Dictionary<int, string>();// Will hold list of all children
+            using (_connection)
+            {
+                _connection.Open();
+                SqliteCommand dbcmd = _connection.CreateCommand();
+
+                // Insert the new child
+                dbcmd.CommandText = $"select id, name from child";
+                using (SqliteDataReader dr = dbcmd.ExecuteReader())
+                {
+                    while(dr.Read())
+                    {
+                       childList.Add(dr.GetInt32(0), dr[1].ToString()); 
+                    }
+                }
+
+                // clean up
+                dbcmd.Dispose ();
+                _connection.Close ();
+            }
+            return childList;
         }
 
         public string GetChild (string name)
@@ -70,9 +90,30 @@ namespace BagOLoot
 
         public bool IsDelivered(int childID)
         {
-            return true;
+            bool success = false;
+            using (_connection)
+            {
+                _connection.Open();
+                SqliteCommand dbcmd = _connection.CreateCommand();
+                dbcmd.CommandText = $"update child set delivered = 1 where id={childID}";
+                dbcmd.ExecuteNonQuery();
+
+                dbcmd.CommandText = $"select child where id={childID} and delivered = 1";
+                using(SqliteDataReader reader = dbcmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                    success = true;
+                    }
+                    else
+                    {
+                    success = false;
+                    }
+                }
+                _connection.Dispose();
+                _connection.Close();
+            }
+            return success;
         }
-
-
     }
 }

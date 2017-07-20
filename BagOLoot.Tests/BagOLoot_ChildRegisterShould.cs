@@ -27,7 +27,7 @@ namespace BagOLoot.Tests
         public void ReturnListOfChildren()
         {
             var result = _register.GetChildren();
-            Assert.IsType<List<string>>(result);
+            Assert.IsType<Dictionary<int, string>>(result);
         }
         [Fact]
         public void GetAllChildrenWithToysShould()
