@@ -32,8 +32,8 @@ namespace BagOLoot.Tests
         [Fact]
         public void GetAllChildrenWithToysShould()
         {
-            List<int> kidsWithToys = _register.GetAllChildrenWithToys();
-            Assert.IsType<List<int>> (kidsWithToys);
+            Dictionary<int, string> kidsWithToys = _register.GetAllChildrenWithToys();
+            Assert.IsType<Dictionary<int, string>>(kidsWithToys);
         }
         [Fact]
         public void SetIsDeliveredShould()

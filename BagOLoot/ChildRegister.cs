@@ -82,10 +82,37 @@ namespace BagOLoot
             return child;
         }
 
-        public List<int> GetAllChildrenWithToys()
+        public Dictionary<int, string> GetAllChildrenWithToys()
         {
-            List<int> dummyData = new List<int>();
-            return dummyData;
+            Dictionary<int, string> childList = new Dictionary<int, string>();// Will hold list of all children
+            using (_connection)
+            {
+                _connection.Open();
+                SqliteCommand dbcmd = _connection.CreateCommand();
+
+                // Insert the new child
+                dbcmd.CommandText = $"select c.id, c.name from child c inner join toy t where c.id = t.childID";
+                using (SqliteDataReader dr = dbcmd.ExecuteReader())
+                {
+                    while(dr.Read())
+                    {
+                        if(childList.ContainsKey(dr.GetInt32(0)))
+                        {
+
+                        }
+                        else
+                        {
+                            childList.Add(dr.GetInt32(0), dr[1].ToString());
+                        }
+                         
+                    }
+                }
+
+                // clean up
+                dbcmd.Dispose ();
+                _connection.Close ();
+            }
+            return childList;
         }
 
         public bool IsDelivered(int childID)
@@ -98,7 +125,7 @@ namespace BagOLoot
                 dbcmd.CommandText = $"update child set delivered = 1 where id={childID}";
                 dbcmd.ExecuteNonQuery();
 
-                dbcmd.CommandText = $"select child where id={childID} and delivered = 1";
+                dbcmd.CommandText = $"select c.id from child c where c.id={childID} and c.delivered = 1";
                 using(SqliteDataReader reader = dbcmd.ExecuteReader())
                 {
                     if (reader.Read())

@@ -10,7 +10,7 @@ namespace BagOLoot
         
         private string _connectionString = $"Data Source={Environment.GetEnvironmentVariable("BAGOLOOT_DB")}";
         private SqliteConnection _connection;
-        
+
         public ToyRegister()
         {
             _connection = new SqliteConnection(_connectionString);
@@ -25,7 +25,6 @@ namespace BagOLoot
 
                 // Insert the new child
                 dbcmd.CommandText = $"insert into toy values (null, '{name}', {childID})";
-                Console.WriteLine(dbcmd.CommandText);
                 dbcmd.ExecuteNonQuery ();
 
                 // Get the id of the new row
