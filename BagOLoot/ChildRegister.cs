@@ -21,13 +21,21 @@ namespace BagOLoot
             int _lastId = 0; // Will store the id of the last inserted record
             using (_connection)
             {
-                _connection.Open ();
-                SqliteCommand dbcmd = _connection.CreateCommand ();
+                //check to see if name already exists
+                Dictionary<int, string> allChildren = GetChildren();
+                while(allChildren.ContainsValue(child))
+                {
+                    Console.WriteLine("This name is already being used,");
+                    Console.WriteLine("please choose a different name");
+                    Console.Write ("> ");
+                    child = Console.ReadLine();
+                }
 
                 // Insert the new child
+                _connection.Open();
+                SqliteCommand dbcmd = _connection.CreateCommand();
                 dbcmd.CommandText = $"insert into child values (null, '{child}', 0)";
-                Console.WriteLine(dbcmd.CommandText);
-                dbcmd.ExecuteNonQuery ();
+                dbcmd.ExecuteNonQuery();
 
                 // Get the id of the new row
                 dbcmd.CommandText = $"select last_insert_rowid()";
